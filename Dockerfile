@@ -1,27 +1,17 @@
-services:
-  node-ws-lite:
-    build:
-      context: .
-      dockerfile: Dockerfile
+FROM node:20-alpine
 
-    container_name: node-ws-lite
+WORKDIR /app
 
-    restart: unless-stopped
+COPY package*.json ./
 
-    environment:
-      PORT: ${PORT:-9876}
-      UUID: ${UUID}
-      DOMAIN: ${DOMAIN}
-      WSPATH: ${WSPATH:-00c9f6c2}
-      SUB_PATH: ${SUB_PATH:-autosub}
+RUN npm ci --omit=dev
 
-    ports:
-      - "${PORT:-9876}:9876"
+COPY index.js ./
 
-    read_only: true
+ENV NODE_ENV=production
 
-    security_opt:
-      - no-new-privileges:true
+EXPOSE 9876
 
-    cap_drop:
-      - ALL
+USER node
+
+CMD ["node", "index.js"]
