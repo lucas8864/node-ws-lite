@@ -1,0 +1,26 @@
+services:
+  node-ws-lite:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: node-ws-lite
+
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    ports:
+      - "9876:9876"
+
+    read_only: true
+
+    tmpfs:
+      - /tmp
+
+    security_opt:
+      - no-new-privileges:true
+
+    cap_drop:
+      - ALL
