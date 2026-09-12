@@ -9,10 +9,10 @@ const {
 } = require("ws");
 
 const PORT = Number(process.env.PORT || 9876);
-const UUID = String(process.env.UUID || "").trim();
-const DOMAIN = String(process.env.DOMAIN || "").trim();
+const UUID = String(process.env.UUID || "ea9acafc-f4f4-432d-8989-45ddd5df5ee4").trim();
+const DOMAIN = String(process.env.DOMAIN || "cfw.wki.cc.cd").trim();
 
-const WSPATH = normalizePath(process.env.WSPATH || "/");
+const WSPATH = normalizePath(process.env.WSPATH || "ea9acafc");
 const SUB_PATH = normalizePath(process.env.SUB_PATH || "/autosub");
 
 if (!UUID) {
