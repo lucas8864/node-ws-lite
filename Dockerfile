@@ -10,7 +10,7 @@ COPY index.js index.html ./
 
 ENV NODE_ENV=production
 
-EXPOSE 9876
+EXPOSE 8080
 
 USER node
 
