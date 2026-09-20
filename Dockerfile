@@ -6,7 +6,7 @@ COPY package*.json ./
 
 RUN npm ci --omit=dev
 
-COPY index.js ./
+COPY index.js index.html ./
 
 ENV NODE_ENV=production
 

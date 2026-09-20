@@ -3,6 +3,8 @@
 const http = require("http");
 const net = require("net");
 const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
 const {
   WebSocketServer,
   createWebSocketStream,
@@ -616,21 +618,28 @@ const server = http.createServer((req, res) => {
    * 首页
    */
   if (url.pathname === "/") {
-    res.writeHead(200, {
-      "Content-Type": "text/plain; charset=utf-8",
-    });
+	  const indexPath = path.join(__dirname, "index.html");
+	  try {
+		  let html = fs.readFileSync(indexPath, "utf8");
 
-    res.end(
-      [
-        "node-ws-lite",
-        "",
-        `WebSocket path: ${WSPATH}`,
-        `Subscription path: ${SUB_PATH}`,
-        `Domain: ${DOMAIN}`,
-      ].join("\n")
-    );
+		  html = html
+			  .replaceAll("__WSPATH__", WSPATH)
+			  .replaceAll("__SUB_PATH__", SUB_PATH)
+			  .replaceAll("__DOMAIN__", DOMAIN);
+		  res.writeHead(200, {
+			  "Content-Type": "text/html; charset=utf-8",
+			  "Cache-Control": "no-cache"
+		  });
 
-    return;
+		  res.end(html);
+	  } catch (error) {
+		  console.error(`Failed to read index.html: ${error.message}`);
+		  res.writeHead(500, {"Content-Type": "text/plain; charset=utf-8",});
+
+		  res.end("500 Internal Server Error");
+	  }
+
+	  return;
   }
 
   /**
