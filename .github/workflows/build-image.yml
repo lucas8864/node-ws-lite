@@ -52,8 +52,7 @@ jobs:
 
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
+            ${{ env.REGISTRY }}/mynginx:0921
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.description=Lightweight VLESS over WebSocket server
